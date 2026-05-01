@@ -8,78 +8,418 @@
   <link rel="stylesheet" href="application/style.css">
   <script src="application/dropdown.js" defer></script>
   <style>
-    /* Simple and responsive styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      line-height: 1.6;
+    /* Modern styles with animations */
+    :root {
+      --primary-color: #232F3E; /* AWS Navy Blue */
+      --secondary-color: #f2f4f8; /* Soft Cloud Background */
+      --accent-color: #FF9900; /* AWS Orange */
+      --cloud-blue: #0073BB; /* AWS Cloud Blue */
+      --text-color: #333;
     }
 
-    header, footer {
-      background: #0066cc;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+      background: var(--secondary-color);
+      background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f2f4f8 70%);
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(35, 47, 62, 0.98); /* Navy solid */
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-bottom: 3px solid var(--accent-color);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .logo-text {
       color: #fff;
-      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text span {
+      color: var(--accent-color);
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
       padding: 1rem 0;
     }
 
-    main {
-      padding: 1rem;
+    .menu > li {
+      margin: 0 1rem;
+      position: relative;
     }
 
-    section {
+    .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      min-width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 10;
+      text-align: left;
+    }
+
+    .menu li:hover .dropdown-menu {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .dropdown-menu li {
+      list-style: none;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 1rem;
+      color: var(--text-color);
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1d2b38 0%, #0073BB 100%);
+      color: #fff;
+      text-align: center;
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+      padding-top: 100px;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Simple CSS clouds for background decoration */
+    .bg-clouds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      padding: 2rem 1rem 4rem 1rem;
+      z-index: 1;
       max-width: 800px;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    /* Main Content */
+    main {
+      padding: 4rem 1rem;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    ul {
-      list-style-type: disc;
-      margin: 0;
-      padding: 0;
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
     }
 
-    li {
-      margin: 0.5rem 0;
+    section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: floatIn 1s ease-out forwards;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
     }
 
-    footer p {
-      margin: 0;
+    /* Staggered animation delays for sections */
+    section:nth-child(1) { animation-delay: 0.1s; }
+    section:nth-child(2) { animation-delay: 0.2s; }
+    section:nth-child(3) { animation-delay: 0.3s; }
+    section:nth-child(4) { animation-delay: 0.4s; }
+    section:nth-child(5) { animation-delay: 0.5s; }
+    section:nth-child(6) { animation-delay: 0.6s; }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9rem;
+    section h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    section p {
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-saiba-mais {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: var(--primary-color);
+      color: #fff !important;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: 600;
+      text-align: center;
+      transition: background 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .btn-saiba-mais:hover {
+      background: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .full-width-section {
+      grid-column: 1 / -1;
+      text-align: center;
+      align-items: center;
+    }
+
+    .full-width-section h2 {
+      font-size: 2rem;
+      border-bottom: 2px solid var(--accent-color);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: #aaa;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .menu {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .menu > li {
+        width: 100%;
+        text-align: center;
+        margin: 0.5rem 0;
+      }
+
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: #f9f9f9;
+        display: none;
+      }
+
+      .menu li:focus-within .dropdown-menu,
+      .menu li:active .dropdown-menu {
+        display: block;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header {
+        clip-path: none;
+        padding: 3rem 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Bem-vindo à nossa Empresa de TI</h1>
-    <p>Oferecendo soluções digitais para o seu negócio</p>
-  </header>
-  <main>
-    <section aria-labelledby="servicos">
-      <h2 id="servicos">Nossos Serviços</h2>
-      <ul>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle">Nossos Serviços</a>
+  <nav>
+    <div class="nav-container">
+      <div class="logo-text">☁️ Nas<span>Nuvens</span></div>
+      <ul class="menu">
+        <li><a href="#home">Home</a></li>
+        <li>
+          <a href="#" class="dropdown-toggle">Serviços ▼</a>
           <ul class="dropdown-menu">
-            <li><a href="service/certificados.html">Instalação de certificados</a></li>
-            <li><a href="service/backup.html">Backup de arquivos</a></li>
-            <li><a href="service/impressoras.html">Instalação de impressoras</a></li>
-            <li><a href="service/website.html">Criação de Website</a></li>
-            <li><a href="service/automacao.html">Automatização de processos com inteligência artificial</a></li>
-            <li><a href="service/email.html">Criação de serviço de email com domínio próprio</a></li>
+            <li><a href="services/certificados.html">Instalação de Certificados</a></li>
+            <li><a href="services/backup.html">Backup em Nuvem (AWS)</a></li>
+            <li><a href="services/impressoras.html">Instalação de Impressoras</a></li>
+            <li><a href="services/website.html">Criação de Websites</a></li>
+            <li><a href="services/automacao.html">Automação Cloud & IA</a></li>
+            <li><a href="services/email.html">Email com Domínio</a></li>
           </ul>
         </li>
+        <li><a href="#sobre-nos">Sobre a Nas Nuvens</a></li>
+        <li><a href="#contato">Contato</a></li>
       </ul>
+    </div>
+  </nav>
+
+  <header id="home">
+    <div class="bg-clouds">
+       <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%; height:100%; fill:#fff;"><path d="M10,40 Q20,20 40,30 Q60,10 80,30 Q95,40 85,60 Q95,80 75,80 Q50,90 30,80 Q10,80 5,60 Q-5,40 10,40 Z" opacity="0.5" transform="translate(10, 10) scale(0.4)"/><path d="M10,40 Q20,20 40,30 Q60,10 80,30 Q95,40 85,60 Q95,80 75,80 Q50,90 30,80 Q10,80 5,60 Q-5,40 10,40 Z" opacity="0.3" transform="translate(60, 30) scale(0.6)"/></svg>
+    </div>
+    <div class="hero-content">
+      <h1>Nas Nuvens Cloud Solutions</h1>
+      <p>Especialistas em infraestrutura escalável, segurança digital e soluções corporativas voltadas para Cloud Computing (Amazon Web Services).</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="services-grid">
+      <section id="certificados">
+        <h2>Instalação de Certificados</h2>
+        <p>Oferecemos serviços profissionais de instalação de certificados digitais (A1, A3, SSL) para garantir a segurança das suas transações online.</p>
+        <a href="services/certificados.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+
+      <section id="backup">
+        <h2>Backup em Nuvem (AWS)</h2>
+        <p>Garantimos a segurança dos seus dados implementando rotinas de backup altamente resilientes usando Amazon S3. Proteção contra ransomware e perdas acidentais com durabilidade de 99.999999999%.</p>
+        <a href="services/backup.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+
+      <section id="impressoras">
+        <h2>Instalação de Impressoras</h2>
+        <p>Facilitamos a instalação e configuração de impressoras locais ou em rede, garantindo maior eficiência no seu dia a dia.</p>
+        <a href="services/impressoras.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+
+      <section id="website">
+        <h2>Criação de Websites</h2>
+        <p>Transformamos suas ideias em uma presença digital incrível. Desenvolvemos sites institucionais, landing pages e e-commerces sob medida.</p>
+        <a href="services/website.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+
+      <section id="automacao">
+        <h2>Automação Cloud & IA</h2>
+        <p>Reduza o trabalho manual utilizando o poder da computação em nuvem (AWS Lambda) e Inteligência Artificial. Escalabilidade automática e redução de custos operacionais.</p>
+        <a href="services/automacao.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+
+      <section id="email">
+        <h2>Email com Domínio</h2>
+        <p>Crie um serviço de email com seu domínio personalizado e transmita mais credibilidade ao mercado com gestão simplificada.</p>
+        <a href="services/email.html" class="btn-saiba-mais">Saiba Mais</a>
+      </section>
+    </div>
+
+    <section id="sobre-nos" class="full-width-section">
+      <h2>Sobre a Nas Nuvens</h2>
+      <p style="max-width: 800px; margin: 0 auto;">A <strong>Nas Nuvens</strong> é uma parceira tecnológica especializada em guiar empresas em sua jornada digital. Nossa expertise abrange desde infraestrutura tradicional até soluções avançadas em computação em nuvem (com foco em AWS). Desenhamos arquiteturas seguras, escaláveis e de alta disponibilidade, garantindo que a tecnologia trabalhe a favor do crescimento da sua empresa, independentemente do seu tamanho.</p>
+    </section>
+
+    <section id="contato" class="full-width-section" style="margin-top: 2rem;">
+      <h2>Eleve sua TI para as Nuvens</h2>
+      <p>Pronto para modernizar sua infraestrutura com a segurança da Amazon Web Services? Entre em contato conosco.</p>
+      <div style="margin-top: 1rem; background: #f4f7fb; padding: 2rem; border-radius: 8px; display: inline-block; border-top: 4px solid var(--accent-color);">
+        <p><strong>Telefone / WhatsApp:</strong> (00) 00000-0000</p>
+        <p><strong>Email:</strong> contato@nasnuvens.com.br</p>
+      </div>
     </section>
   </main>
+
   <footer>
-    <p>&copy; 2026 Empresa de TI - Todos os direitos reservados.</p>
-    <p><a href="contact.html" style="color: #fff; text-decoration: underline;">Entre em contato</a></p>
+    <p>&copy; 2026 Nas Nuvens - Soluções em Cloud Computing.</p>
+    <p style="margin-top: 0.5rem;"><a href="#contato">Fale com um especialista AWS</a></p>
   </footer>
 </body>
 </html>
