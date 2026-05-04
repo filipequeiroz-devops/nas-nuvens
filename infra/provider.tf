@@ -6,13 +6,13 @@ terraform {
     }
   }
   backend "s3" {
-        bucket  = "nas-nuvens-remote-state" 
-        key     = "remote-state/to/terraform.tfstate" 
-        region  = "us-east-1" 
-        encrypt = true
-    }
+    bucket  = "nas-nuvens-remote-state"
+    key     = "remote-state/to/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
 }
 
 provider "aws" {
-  region = "us-east-1" 
+  region = "us-east-1"
 }
