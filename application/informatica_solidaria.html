@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Informática Solidária - Projeto social da Nas Nuvens focado em inclusão digital para a terceira idade em Guarulhos.">
+  <title>Informática Solidária - Nas Nuvens</title>
+  <script src="dropdown.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reaproveitando estilos do index e ajustando para a página interna */
+    :root {
+      --primary-color: #232F3E;
+      --secondary-color: #f2f4f8;
+      --accent-color: #FF9900;
+      --cloud-blue: #0073BB;
+      --text-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+      background: var(--secondary-color);
+      background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f2f4f8 70%);
+      padding-top: 80px; /* Espaço para o menu fixo */
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(35, 47, 62, 0.98);
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-bottom: 3px solid var(--accent-color);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .logo-text {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo-text span {
+      color: var(--accent-color);
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      padding: 1rem 0;
+    }
+
+    .menu > li {
+      margin: 0 1rem;
+      position: relative;
+    }
+
+    .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      min-width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 10;
+      text-align: left;
+    }
+
+    .menu li:hover .dropdown-menu {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .dropdown-menu li {
+      list-style: none;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 1rem;
+      color: var(--text-color);
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+    }
+
+    /* Header interno */
+    header.internal-header {
+      background: linear-gradient(135deg, #1d2b38 0%, #0073BB 100%);
+      color: #fff;
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: floatIn 1s ease-out;
+    }
+
+    .header-text {
+      text-align: left;
+    }
+
+    header.internal-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #fff;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header.internal-header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    /* Main Content */
+    main {
+      padding: 4rem 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .content-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 3rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      animation: floatIn 1s ease-out forwards;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: center;
+    }
+
+    .info-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .content-box h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--accent-color);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    .content-box h3 {
+      color: var(--cloud-blue);
+      margin: 2rem 0 1rem 0;
+      font-size: 1.3rem;
+    }
+
+    .content-box p {
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .content-box ul {
+      margin-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .content-box li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--accent-color);
+    }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: #aaa;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu {
+        flex-direction: column;
+        align-items: center;
+      }
+      .menu > li {
+        width: 100%;
+        text-align: center;
+        margin: 0.5rem 0;
+      }
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: #f9f9f9;
+        display: none;
+      }
+      .menu li:focus-within .dropdown-menu,
+      .menu li:active .dropdown-menu {
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .header-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .header-text {
+          text-align: center;
+        }
+      }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo-text"><a href="index.html">☁️ Nas<span>Nuvens</span></a></div>
+      <ul class="menu">
+        <li><a href="index.html#home">Home</a></li>
+        <li>
+          <a href="#" class="dropdown-toggle">Serviços ▼</a>
+          <ul class="dropdown-menu">
+            <li><a href="services/certificados.html">Instalação de Certificados</a></li>
+            <li><a href="services/backup.html">Backup em Nuvem (AWS)</a></li>
+            <li><a href="services/impressoras.html">Instalação de Impressoras</a></li>
+            <li><a href="services/website.html">Criação de Websites</a></li>
+            <li><a href="services/automacao.html">Automação Cloud & IA</a></li>
+            <li><a href="services/email.html">Email com Domínio</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#sobre-nos">Sobre a Nas Nuvens</a></li>
+        <li><a href="informatica_solidaria.html">Informática Solidária</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="internal-header">
+    <div class="header-content">
+      <img src="images/image3.png" alt="Informática Solidária Logo" class="header-logo">
+      <div class="header-text">
+        <h1>Informática Solidária</h1>
+        <p>Inclusão digital e suporte tecnológico para a terceira idade</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="content-box">
+      <h2>O Projeto</h2>
+
+      <div class="info-grid">
+        <div>
+          <p>O projeto <strong>Informática Solidária</strong> é uma iniciativa voluntária da <strong>Nas Nuvens</strong> focada em promover a inclusão digital e fornecer suporte tecnológico gratuito para a população da terceira idade.</p>
+
+          <p>Localizada no município de Guarulhos, São Paulo, a ação segue ativa com o propósito fundamental de auxiliar os idosos a superarem as barreiras com a tecnologia no dia a dia. O foco é garantir que esse público tenha acesso à informação e consiga utilizar ferramentas e dispositivos digitais com mais facilidade, segurança e autonomia.</p>
+        </div>
+        <img src="images/image1.png" alt="Informática Solidária - Apoio" class="info-image" style="object-position: top;">
+      </div>
+
+      <div class="info-grid" style="margin-top: 3rem;">
+        <img src="images/image2.png" alt="Informática Solidária - Aprendizado" class="info-image" style="object-position: top;">
+        <div>
+          <h3>Exemplos de Auxílios Prestados</h3>
+          <ul>
+            <li>Ajuda com uso de celulares e smartphones</li>
+            <li>Auxílio na operação de computadores e impressoras</li>
+            <li>Orientação no acesso a sites do governo e realização de cadastros</li>
+            <li>Dicas de segurança e conselhos para evitar possíveis golpes virtuais</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="index.html" class="back-btn">Voltar para a Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Nas Nuvens - Soluções em Cloud Computing.</p>
+  </footer>
+</body>
+</html>

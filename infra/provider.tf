@@ -5,8 +5,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+        bucket  = "nas-nuvens-remote-state" 
+        key     = "remote-state/to/terraform.tfstate" 
+        region  = "us-east-1" 
+        encrypt = true
+    }
 }
 
 provider "aws" {
-  region = "us-east-1" # Altere para a região desejada
+  region = "us-east-1" 
 }
